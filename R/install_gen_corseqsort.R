@@ -8,3 +8,7 @@ install_gen_corseqsort <- function() {
   "~/Documents/UIC/Fall 2024/Computational Statistics/extra_info_3variate.sorting/Q1/Q1/GenCorSeqSort")
   }
 }
+
+
+
+
