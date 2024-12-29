@@ -1,6 +1,6 @@
 
 
-GenCorDataBiTri1.1 = function(n, lst, cor_mat) {
+GenCorDataBiTri1.1 = function(n, lst, cor_mat,row.method=1) {
   if (!(length(lst) == 2 || length(lst) == 3)) {
     stop("This sorting method only can be applied to 2 or 3 variables")
   }
@@ -83,21 +83,33 @@ GenCorDataBiTri1.1 = function(n, lst, cor_mat) {
     Check.TriBounds(srt_cor, srt_pv, srt_low_bdd, srt_up_bdd, ord)
 
     sim = sapply(srt_lst, function(a){a(n)})
+    if (row.method == 2){
+      sim = sapply(srt_lst, function(a){a(10*n)})
+    }
 
     s1 = srt_cor[1]*srt_cor[2] > 0
     s2 = srt_cor[3] < 0
     s3 = abs(srt_low_bdd[3]) < srt_up_bdd[3]
 
-    probabilities1 <- lapply(srt_pv[1]*n, get_probabilities)
-    probabilities2 <- lapply(srt_pv[2]*n, get_probabilities)
+    if (row.method == 1){
+      probabilities1 <- lapply(srt_pv[1]*n, get_probabilities)
+      probabilities2 <- lapply(srt_pv[2]*n, get_probabilities)
+      n1 = adjust_n_sort(srt_pv[1]*n, probabilities1)
+      n2 = adjust_n_sort(srt_pv[2]*n, probabilities2)
+    }else if (row.method == 2){
+      n1 = floor(srt_pv[1]*n*10)
+      n2 = floor(srt_pv[2]*n*10)
+    }else {
+      stop("Please Choose the Correct Method!")
+    }
 
-
-    n1 = adjust_n_sort(srt_pv[1]*n, probabilities1)
-    n2 = adjust_n_sort(srt_pv[2]*n, probabilities2)
 
     if (all(s1,s2,s3) || all(!s1, !s2, !s3)) {
       print("Sort without overlap")
       n3 = floor(srt_pv[3]*n)
+      if (row.method == 2){
+        n3 = floor(srt_pv[3]*n*10)
+      }
       sim[, 2] = Rank.Sort(sim[, 1], sim[, 2], 1:n1, srt_cor[1])
       sim[, 3] = Rank.Sort(sim[, 1], sim[, 3], (n1 + 1):(n1 + n2), srt_cor[2])
       sim[, 3] = Rank.Sort(sim[, 2], sim[, 3], (n1 + n2 + 1):(n1 + n2+ n3), srt_cor[3])
@@ -106,6 +118,9 @@ GenCorDataBiTri1.1 = function(n, lst, cor_mat) {
       # The remain correlation need to achieve for the last one
       rem = srt_cor[3] - srt_pv[1]*ifelse((srt_cor[1]*srt_cor[2] > 0), srt_up_bdd[3], srt_low_bdd[3])
       n3 = ifelse(rem >= 0, floor(n*(rem/srt_up_bdd[3])), floor(n*(rem/srt_low_bdd[3])))
+      if (row.method == 2){
+        n3 = ifelse(rem >= 0, floor(10*n*(rem/srt_up_bdd[3])), floor(10*n*(rem/srt_low_bdd[3])))
+      }
       sim[, 2] = Rank.Sort(sim[, 1], sim[, 2], (1:n1), srt_cor[1])
       sim[, 3] = Rank.Sort(sim[, 1], sim[, 3], 1:n2, srt_cor[2])
       sim[, 3] = Rank.Sort(sim[, 2], sim[, 3], (n2 + 1):(n2 + n3), rem)
@@ -115,6 +130,9 @@ GenCorDataBiTri1.1 = function(n, lst, cor_mat) {
 
   colnames(sim) = as.character(ord)
   sim = sim[, order(colnames(sim))]
+  if (row.method == 2){
+    sim = sim[sample(1:nrow(sim), n, replace = FALSE), ]
+  }
   re = list(sim, round(cor(sim),4), round(cor_mat,4))
   names(re) = c("sim_data", "gen_cor", "spec_cor")
   re
