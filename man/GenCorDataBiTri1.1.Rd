@@ -2,13 +2,51 @@
 % Please edit documentation in R/GenCorDataBiTri1.1.R
 \name{GenCorDataBiTri1.1}
 \alias{GenCorDataBiTri1.1}
-\title{Title}
+\title{Generate bivariate or trivariate data with specified marginal distributions as well as a specified correlation structure}
 \usage{
 GenCorDataBiTri1.1(n, lst, cor_mat, row.method = 1)
 }
 \arguments{
-\item{row.method}{}
+\item{n}{Sample size for the simulation data}
+
+\item{lst}{A list of functions which generate data under specified marginal distributions separately}
+
+\item{cor_mat}{Specified correlation matrix}
+
+\item{row.method}{Specified the method to calculate the
+exact number of sorting rows. Default value is 1,
+meaning that we used a probabilistic sorting to deal with bias
+(a simple algebraic operation). 2 means we
+generated much bigger data and
+choose a subset of desired size by sampling rows without replacement}
+}
+\value{
+A list is returned which contains matrices of simulated data, generated correlations and specified correlations.
+  \item{\code{sim_data}}{n by (2 or 3) matrix. Each column corresponds to a variable, and each row is one random sample.}
+  \item{\code{gen_cor}}{Correlation matrix calculated from the simulated data}
+  \item{\code{spec_cor}}{Specified correlation matrix}
 }
 \description{
-Title
+This updated function generates bivariate or trivariate mixed simulation data given the specified marginal distributions and
+ correlation structure.
+}
+\details{
+The orginal function is given by \code{\link{GenCorDataBiTri}}. 1.1 version
+has two major changes. The first one is about fixing the issue encounter in
+the bivariate case, the second issue is related to sorting
+bias when sampling with small sample size. We solved this issue by implementing
+two methods to calculate the exact number of sorting rows
+}
+\examples{
+ f1 = function(n){rnorm(n)}
+ cor_mat = matrix(c(1,.49,.1, .49, 1, -.4, .1, -.4, 1), nrow = 3)
+ GenCorDataBiTri1.1(10^5, list(f1,f1,f1), cor_mat,row.method = 1)
+
+
+
+
+}
+\references{
+Demirtas (2019), Inducing Any Feasible Level of Correlation to
+            Bivariate Data With Any Marginals, The American Statistician 73.3 (2019): 273-277
 }

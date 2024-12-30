@@ -1,14 +1,17 @@
 
-#' Title
+#' Generate a Table Lower (below the diagonal) and upper (above the diagonal)
+#' correlation bounds.
 #'
-#' @param n
-#' @param lst
-#' @param digits
+#' @param n Sample size for the simulation data
+#' @param lst A list of functions which generate data under specified marginal distributions separately
+#' @param digits the dig
 #'
 #' @return
-#' @export
+#'
 #'
 #' @examples
+#'
+#' @export
 GenBoundTable <- function(n, lst, digits = 4) {
   pair_bounds <- Compute.PairBounds(lst)
   nvars <- length(lst)

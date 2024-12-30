@@ -1,7 +1,7 @@
 
 
 
-#' Title
+#' The empirical results for n combinations of specified correlations
 #'
 #' @param n
 #' @param lst
