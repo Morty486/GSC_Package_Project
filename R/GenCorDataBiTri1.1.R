@@ -1,15 +1,31 @@
-
-#' Title
+#' This function generates bivariate or trivariate mixed simulation data given the
+#' specified marginal distributions and correlation structure.
 #'
-#' @param n
-#' @param lst
-#' @param cor_mat
+#' @param n Sample size for the simulation data
+#' @param lst A list of functions which generate data under specified marginal distributions separately
+#' @param cor_mat Specified correlation matrix
 #' @param row.method
 #'
 #' @return
-#' @export
+#'
+#' @importFrom stats cor
 #'
 #' @examples
+#' f1 = function(n){rnorm(n)}
+#' f2 = function(n){rexp(n)}
+#' f3 = function(n){rpois(n, 2.5)}
+#' f4 = function(n){rbinom(n, 10, 0.5)}
+#' cor_mat1 = matrix(c(1, 0.2, 0.2, 1), nrow = 2)
+#' GenCorDataBiTri1.1(10^4, list(f1,f2), cor_mat1)
+#'
+#' cor_mat2 = matrix(c(1, -0.6, 0.3, -0.6, 1, -0.2, 0.3, -0.2, 1), nrow = 3)
+#' GenCorDataBiTri1.1(10^4, list(f2,f3,f4), cor_mat2)
+#'
+#'
+#'
+#' @export
+
+
 GenCorDataBiTri1.1 = function(n, lst, cor_mat,row.method=1) {
   if (!(length(lst) == 2 || length(lst) == 3)) {
     stop("This sorting method only can be applied to 2 or 3 variables")
