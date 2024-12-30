@@ -3,11 +3,11 @@
 
 #' The empirical results for n combinations of specified correlations
 #'
-#' @param n
-#' @param lst
-#' @param dist_X
-#' @param dist_Y
-#' @param dist_Z
+#' @param n number of combinations of specified correlations want to generate
+#' @param lst A list of functions which generate data under specified marginal distributions separately
+#' @param dist_X name of ditribution X
+#' @param dist_Y name of ditribution Y
+#' @param dist_Z name of ditribution Z
 #'
 #' @return
 #' @export
