@@ -14,14 +14,14 @@ We developed a new R function that:
 
 - Handles fractional sorting ratios by implementing a probabilistic sorting . 
 \
+\
 For instance, with a ratio of 
-0.7856
 0.7856, the function sorts 78 rows with 
 44% probability and 79 rows with 56% probability.
 
-\
 
-- Supports a method toselect rows by sampling without replacement.
+- Supports a method to select rows by sampling without replacement.
+\
 \
 For instance, suppose we want to sample 1000 rows with a ratio of 
 0.7856. We first increase the size to 10000 rows, meaning 7856 rows 
