@@ -1,3 +1,13 @@
+#' Title
+#'
+#' @param lst
+#' @param round
+#' @param max_tries
+#'
+#' @return
+#' @export
+#'
+#' @examples
 GenCorMat <- function(lst, round = 2, max_tries = 100) {
   if (!(length(lst) == 2 || length(lst) == 3)) {
     stop("This function can only support 2 or 3 variables.")

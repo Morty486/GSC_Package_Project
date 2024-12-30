@@ -1,3 +1,15 @@
+#' Title
+#'
+#' @param n
+#' @param lst
+#' @param cor_mat
+#' @param row.method
+#' @param digits
+#'
+#' @return
+#' @export
+#'
+#' @examples
 GenCorrTable <- function(n, lst, cor_mat, row.method = 1, digits = 4) {
   if (!(length(lst) == 2 || length(lst) == 3)) {
     stop("This function only can be applied to 2 or 3 variables")

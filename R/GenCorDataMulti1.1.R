@@ -39,7 +39,6 @@
 #' @importFrom stats cor
 #'
 #' @export
-
 GenCorDataMulti1.1 = function(n, lst, cor_mat) {
   if (!nrow(cor_mat) == length(lst)) {
     stop("Dimension of correlation matrix does not match the number of variables! \n")

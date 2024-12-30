@@ -40,8 +40,6 @@
 #'
 #'
 #' @export
-
-
 GenCorDataBiTri1.1 = function(n, lst, cor_mat,row.method=1) {
   if (!(length(lst) == 2 || length(lst) == 3)) {
     stop("This sorting method only can be applied to 2 or 3 variables")

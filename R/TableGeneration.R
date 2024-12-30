@@ -1,6 +1,18 @@
 
 
 
+#' Title
+#'
+#' @param n
+#' @param lst
+#' @param dist_X
+#' @param dist_Y
+#' @param dist_Z
+#'
+#' @return
+#' @export
+#'
+#' @examples
 TableGeneration <- function(n, lst, dist_X, dist_Y, dist_Z) {
   # Initialize an empty list to store the results of each replication
   results_list <- list()
