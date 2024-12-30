@@ -37,13 +37,24 @@ Additionally, we fixed the issues in bivariate setting.
 
 ### Other Features:
 
-- Allow visulization for simulation results.
+- Allow Visualization for simulation results.
 
 
 ## Installation
 
+Since our package is an update of the following package, we need to install 
+the original one first:
 
 ```{r}
 devtools::install_github("Morty486/GenCorSeqSort", build_vignettes = T)
 ```
+
+Next, we can install our package by the following command:
+
+```{r}
+devtools::install_github("Morty486/GSC_Package_Project", build_vignettes = T)
+```
+
+
+
 
