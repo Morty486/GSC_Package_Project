@@ -40,5 +40,10 @@ Additionally, we fixed the issues in bivariate setting.
 - Allow visulization for simulation results.
 
 
+## Installation
 
+
+```{r}
+devtools::install_github("Morty486/GenCorSeqSort", build_vignettes = T)
+```
 
