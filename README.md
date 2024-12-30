@@ -9,7 +9,8 @@ the following issues:
 1. The sequential sorting algorithm faced a challenge when the required sorting ratio 
 causing potential bias,  such as sorting 78 or 79 rows out of 100.
 
-2. Original code has issues with bivariate setting.
+2. Original code has issues with bivariate setting-particularly the function GenCorDataBiTri() 
+doesn't work properly when 2 distributions are passed in as arguments.
 
 
 ### Solution:
@@ -32,7 +33,8 @@ needs to be sorted. By sampling without replacement, we select 1000 rows
 as our final simulation data.
 
 \
-Additionally, we fixed the issues in bivariate setting.
+Additionally, we fixed the issues in bivariate setting and now the revised function GenCorDataBiTri1.1() 
+can correctly handle a pair of distributions.
 
 
 ### Other Features:
@@ -54,7 +56,7 @@ Next, we can install our package by the following command:
 
 ```{r}
 devtools::install_github("Morty486/GSC_Package_Project", build_vignettes = T)
-library(GSC_Package_Project)
+library(GSCSim) 
 ```
 
 
