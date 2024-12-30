@@ -47,14 +47,36 @@ the original one first:
 
 ```{r}
 devtools::install_github("Morty486/GenCorSeqSort", build_vignettes = T)
+library(GenCorSeqSort)
 ```
 
 Next, we can install our package by the following command:
 
 ```{r}
 devtools::install_github("Morty486/GSC_Package_Project", build_vignettes = T)
+library(GSC_Package_Project)
 ```
 
+
+## Visualization
+
+Our package has a special feature of visualization, here's an example:
+
+```{r}
+# Example Usage
+X <- function(n) rnorm(n, mean = 0, sd = 1)
+Y <- function(n) rpois(n, lambda = 2)
+Z <- function(n) runif(n, min = 0, max = 1)
+set.seed(100)
+a <- TableGeneration(3, list(X, Y, Z), "N(0, 1)", "Poisson(2)", "Uniform(0, 1)")
+
+# Access bounds table
+library(knitr)
+kable(a$bounds_table, format = "markdown", caption = "Bounds Table")
+
+# Access correlation table
+kable(a$correlation_table, format = "markdown", caption = "Correlation Table")
+```
 
 
 
