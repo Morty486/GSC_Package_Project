@@ -54,7 +54,7 @@ Next, we can install our package by the following command:
 
 ```{r}
 devtools::install_github("Morty486/GSC_Package_Project", build_vignettes = T)
-library(GSC_Package_Project)
+library(GSCSim)
 ```
 
 
