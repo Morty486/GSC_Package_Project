@@ -1,3 +1,4 @@
+
 #' Title
 #'
 #' @param n
@@ -8,7 +9,6 @@
 #' @export
 #'
 #' @examples
-#'
 GenBoundTable <- function(n, lst, digits = 4) {
   pair_bounds <- Compute.PairBounds(lst)
   nvars <- length(lst)
