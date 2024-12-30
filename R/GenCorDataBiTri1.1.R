@@ -1,6 +1,6 @@
 
 
-GenCorDataBiTri1.1 = function(n, lst, cor_mat,row.method=1) {
+GenCorDataBiTri1.2 = function(n, lst, cor_mat,row.method=1) {
   if (!(length(lst) == 2 || length(lst) == 3)) {
     stop("This sorting method only can be applied to 2 or 3 variables")
   }
@@ -67,6 +67,7 @@ GenCorDataBiTri1.1 = function(n, lst, cor_mat,row.method=1) {
       sim[, 1][1:n_sort] = sort(sim[, 1][1:n_sort])
       sim[, 2][1:n_sort] = rev(sort(sim[, 1][1:n_sort]))
     }
+    ord <- 1:2
   }
 
   if (length(lst) == 3) {
