@@ -8,9 +8,9 @@ the following issues:
 ### Problem:
 1. The sequential sorting algorithm faced a challenge when the required sorting ratio 
 causing potential bias,  such as sorting 78 or 79 rows out of 100.
-\
+
 2. Original code has issues with bivariate setting.
-\
+
 
 ### Solution:
 We developed a new R function that:
@@ -31,7 +31,6 @@ For instance, suppose we want to sample 1000 rows with a ratio of
 needs to be sorted. By sampling without replacement, we select 1000 rows
 as our final simulation data.
 
-\
 \
 Additionally, we fixed the issues in bivariate setting.
 
