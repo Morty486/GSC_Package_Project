@@ -3,11 +3,14 @@
 ## Introduction
 
 This package has updated the previous function in GenCorSeqSort by addressing
-the following issue:
+the following issues:
 
 ### Problem:
-The sequential sorting algorithm faced a challenge when the required sorting ratio 
+1. The sequential sorting algorithm faced a challenge when the required sorting ratio 
 causing potential bias,  such as sorting 78 or 79 rows out of 100.
+\
+2. Original code has issues with bivariate setting.
+\
 
 ### Solution:
 We developed a new R function that:
@@ -26,10 +29,16 @@ For instance, with a ratio of
 For instance, suppose we want to sample 1000 rows with a ratio of 
 0.7856. We first increase the size to 10000 rows, meaning 7856 rows 
 needs to be sorted. By sampling without replacement, we select 1000 rows
-as our final simulation data
+as our final simulation data.
+
+\
+\
+Additionally, we fixed the issues in bivariate setting.
 
 
+### Other Features:
 
+- Allow visulization for simulation results.
 
 
 
