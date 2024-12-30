@@ -1,15 +1,46 @@
-
-#' Title
+#' Generate bivariate or trivariate data with specified marginal distributions as well as a specified correlation structure
 #'
-#' @param n
-#' @param lst
-#' @param cor_mat
-#' @param row.method
+#' This updated function generates bivariate or trivariate mixed simulation data given the specified marginal distributions and
+#'  correlation structure.
 #'
-#' @return
-#' @export
+#' The orginal function is given by \code{\link{GenCorDataBiTri}}. 1.1 version
+#' has two major changes. The first one is about fixing the issue encounter in
+#' the bivariate case, the second issue is related to sorting
+#' bias when sampling with small sample size. We solved this issue by implementing
+#' two methods to calculate the exact number of sorting rows
+#'
+#' @param n  Sample size for the simulation data
+#' @param lst A list of functions which generate data under specified marginal distributions separately
+#' @param cor_mat  Specified correlation matrix
+#' @param row.method Specified the method to calculate the
+#' exact number of sorting rows. Default value is 1,
+#' meaning that we used a probabilistic sorting to deal with bias
+#' (a simple algebraic operation). 2 means we
+#' generated much bigger data and
+#' choose a subset of desired size by sampling rows without replacement
+#'
+#'
+#' @return A list is returned which contains matrices of simulated data, generated correlations and specified correlations.
+#'   \item{\code{sim_data}}{n by (2 or 3) matrix. Each column corresponds to a variable, and each row is one random sample.}
+#'   \item{\code{gen_cor}}{Correlation matrix calculated from the simulated data}
+#'   \item{\code{spec_cor}}{Specified correlation matrix}
+#'
+#' @references Demirtas (2019), Inducing Any Feasible Level of Correlation to
+#'             Bivariate Data With Any Marginals, The American Statistician 73.3 (2019): 273-277
+#'
+#'
+#'
+#' @importFrom stats cor
 #'
 #' @examples
+#'  f1 = function(n){rnorm(n)}
+#'  cor_mat = matrix(c(1,.49,.1, .49, 1, -.4, .1, -.4, 1), nrow = 3)
+#'  GenCorDataBiTri1.1(10^5, list(f1,f1,f1), cor_mat,row.method = 1)
+#'
+#'
+#'
+#'
+#' @export
 GenCorDataBiTri1.1 = function(n, lst, cor_mat,row.method=1) {
   if (!(length(lst) == 2 || length(lst) == 3)) {
     stop("This sorting method only can be applied to 2 or 3 variables")
