@@ -13,7 +13,7 @@ causing potential bias,  such as sorting 78 or 79 rows out of 100.
 
 
 ### Solution:
-We developed a new R function that:
+We updated the main functions that:
 
 - Handles fractional sorting ratios by implementing a probabilistic sorting . 
 \
