@@ -2,8 +2,6 @@
 #'
 #' This function generates multivariate mixed simulation data (n by k) given the specified marginal distributions and correlation structure.
 #'
-#' This function incorporates probabilistic rounding for the sorting proportion to address potential bias caused by rounding
-#'
 #' Generate n random samples from the intended k marginal distributions independently. To introduce a specified correlation structure for these random samples,
 #' sort (k-1) sequences of numbers sequentially. In this function, the sequential sorting is achieved by keeping i th sequence of numbers unchanged and sorting
 #' (i+1) th to k th sequences of numbers accordingly for i from 1 to (k-1).
@@ -27,7 +25,7 @@
 #' @references Demirtas (2019), Inducing Any Feasible Level of Correlation to
 #'             Bivariate Data With Any Marginals, The American Statistician 73.3 (2019): 273-277
 #'
-#' @seealso \code{\link{Rank.Sort}}, \code{\link{Validate.Correlation}}, \code{\link{Compute.SortProp}}, \code{\link{Compute.PairBounds}}
+#'
 #'
 #'
 #'
@@ -36,7 +34,7 @@
 #' cor_mat = matrix(
 #' c(1,.1,.2,.3,.1,1,.4,.2,.2,.4,1,.2,.3,.2,.2,1),
 #' nrow = 4)
-#' GenCorDataK(10^5, list(f1,f1,f1,f1), cor_mat)
+#' GenCorDataMulti(10^5, list(f1,f1,f1,f1), cor_mat)
 #'
 #' @importFrom stats cor
 #'
