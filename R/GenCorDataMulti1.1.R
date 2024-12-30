@@ -33,11 +33,8 @@
 #'
 #' @examples
 #' f1 = function(n){rnorm(n)}
-#' cor_mat = matrix(
-#' c(1,.1,.2,.3,.1,1,.4,.2,.2,.4,1,.2,.3,.2,.2,1),
-#' nrow = 4)
-#' GenCorDataK(10^5, list(f1,f1,f1,f1), cor_mat)
-#' GenCorDataMulti1.1(10^5, list(f1,f1,f1,f1), cor_mat)
+#' cor_mat = matrix(c(1,.1,.2,.3,.1,1,.4,.2,.2,.4,1,.2,.3,.2,.2,1), nrow = 4)
+#' GenCorDataMulti1.1(10^5, list(f1,f1,f1,f1), cor_mat, row.method = 1)
 #'
 #' @importFrom stats cor
 #'
@@ -120,30 +117,6 @@ GenCorDataMulti1.1 = function(n, lst, cor_mat, row.method = 1) {
   l = list(sim, round(cor(sim), 4), round(cor_mat_input, 4))
   names(l) = c("sim_data", "gen_cor", "spec_cor")
   l
-}
-
-
-#### Normal(N), Binomial(B), Possion(P), Uniform(U)
-f1 = function(n){rnorm(n, mean = 0, sd = 1)}
-f2 = function(n){rbinom(n, size = 5, prob = 0.5)}
-f3 = function(n){rpois(n, lambda = 3)}
-f4 = function(n){runif(n, min = 0, max = 1)}
-cor_mat = matrix(c(1,.4,.3,.15,.4,1,-.1,.7,.3,-.1,1,-.25,.15,.7,-.25,1), nrow = 4)
-
-sim_size <- c(100, 200, 500)
-sim_res <- data.frame(N_rep = rep(c(1:1000), length(sim_size)), size = rep(sim_size, each = 1000), Rho_NB = NA, Rho_NP = NA, Rho_BP = NA, Rho_NU = NA, Rho_BU = NA, Rho_PU = NA)
-for (j in 1:3){
-  row_num <- (j - 1) * 1000
-  n = sim_size[j]
-  for (i in 1:1000){
-    row_num = row_num + 1
-    cat("sample size =", n, "simulation =", i, "\n")
-    res = GenCorDataMulti1.1(n, list(f1, f2, f3, f4), cor_mat, row.method = 2)
-    sim_data = res[[1]]
-    cor_emp_mat <- cor(sim_data)
-    cor_emp_vec <- cor_emp_mat[upper.tri(cor_emp_mat)]
-    sim_res[row_num, 3:8] <- cor_emp_vec
-  }
 }
 
 
