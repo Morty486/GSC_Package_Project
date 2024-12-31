@@ -4,12 +4,16 @@
 #'
 #' @param n Sample size for the simulation data
 #' @param lst A list of functions which generate data under specified marginal distributions separately
-#' @param digits the dig
+#' @param digits the decimal for the correlation
 #'
-#' @return
+#' @return A matrix with correlation bounds.
 #'
 #'
 #' @examples
+#' X1 <- function(n) rnorm(n, mean = 0, sd = 1)
+#' X2 <- function(n) rpois(n, lambda = 2)
+#' X3 <- function(n) runif(n, min = 0, max = 1)
+#' GenBoundTable(10000,list(X1,X2,X3,digits=3))
 #'
 #' @export
 GenBoundTable <- function(n, lst, digits = 4) {

@@ -2,13 +2,37 @@
 % Please edit documentation in R/TableGeneration.R
 \name{TableGeneration}
 \alias{TableGeneration}
-\title{Title}
+\title{Generate Correaltion Bound Table and Simulation Table}
 \usage{
 TableGeneration(n, lst, dist_X, dist_Y, dist_Z)
 }
 \arguments{
-\item{dist_Z}{}
+\item{n}{number of combinations of specified correlations want to generate}
+
+\item{lst}{A list of functions which generate data under specified marginal distributions separately}
+
+\item{dist_X}{name of ditribution X}
+
+\item{dist_Y}{name of ditribution Y}
+
+\item{dist_Z}{name of ditribution Z}
+}
+\value{
+A list is returned which contains 2 tables.
+  \item{\code{bounds_table}}{lower (below the diagonal) and upper (above the diagonal) correlation bounds.}
+  \item{\code{correlation_table}}{The empirical results for n combinations of specified correlations}
 }
 \description{
-Title
+The empirical results for n combinations of specified correlations as well as a table for
+lower (below the diagonal) and upper (above the diagonal)
+correlation bounds.
+}
+\examples{
+X <- function(n) rnorm(n, mean = 0, sd = 1)
+Y <- function(n) rpois(n, lambda = 2)
+Z <- function(n) runif(n, min = 0, max = 1)
+a <- TableGeneration(5, list(X, Y, Z), "N(0, 1)", "Poisson(2)", "Uniform(0, 1)")
+a$bounds_table
+a$correlation_table
+
 }

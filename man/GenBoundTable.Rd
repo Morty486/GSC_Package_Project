@@ -2,13 +2,29 @@
 % Please edit documentation in R/GenBoundTable.R
 \name{GenBoundTable}
 \alias{GenBoundTable}
-\title{Title}
+\title{Generate a Table Lower (below the diagonal) and upper (above the diagonal)
+correlation bounds.}
 \usage{
 GenBoundTable(n, lst, digits = 4)
 }
 \arguments{
-\item{digits}{}
+\item{n}{Sample size for the simulation data}
+
+\item{lst}{A list of functions which generate data under specified marginal distributions separately}
+
+\item{digits}{the decimal for the correlation}
+}
+\value{
+A matrix with correlation bounds.
 }
 \description{
-Title
+Generate a Table Lower (below the diagonal) and upper (above the diagonal)
+correlation bounds.
+}
+\examples{
+X1 <- function(n) rnorm(n, mean = 0, sd = 1)
+X2 <- function(n) rpois(n, lambda = 2)
+X3 <- function(n) runif(n, min = 0, max = 1)
+GenBoundTable(10000,list(X1,X2,X3,digits=3))
+
 }

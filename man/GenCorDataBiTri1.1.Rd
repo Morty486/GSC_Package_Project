@@ -2,7 +2,8 @@
 % Please edit documentation in R/GenCorDataBiTri1.1.R
 \name{GenCorDataBiTri1.1}
 \alias{GenCorDataBiTri1.1}
-\title{Generate bivariate or trivariate data with specified marginal distributions as well as a specified correlation structure}
+\title{This updated function generates bivariate or trivariate mixed simulation data given the specified marginal distributions and
+ correlation structure.}
 \usage{
 GenCorDataBiTri1.1(n, lst, cor_mat, row.method = 1)
 }
@@ -27,10 +28,6 @@ A list is returned which contains matrices of simulated data, generated correlat
   \item{\code{spec_cor}}{Specified correlation matrix}
 }
 \description{
-This updated function generates bivariate or trivariate mixed simulation data given the specified marginal distributions and
- correlation structure.
-}
-\details{
 The orginal function is given by \code{\link{GenCorDataBiTri}}. 1.1 version
 has two major changes. The first one is about fixing the issue encounter in
 the bivariate case, the second issue is related to sorting
@@ -38,6 +35,15 @@ bias when sampling with small sample size. We solved this issue by implementing
 two methods to calculate the exact number of sorting rows
 }
 \examples{
+f1 = function(n){rnorm(n)}
+f2 = function(n){rexp(n)}
+f3 = function(n){rpois(n, 2.5)}
+f4 = function(n){rbinom(n, 10, 0.5)}
+cor_mat1 = matrix(c(1, 0.2, 0.2, 1), nrow = 2)
+GenCorDataBiTri1.1(10^4, list(f1,f2), cor_mat1)
+
+cor_mat2 = matrix(c(1, -0.6, 0.3, -0.6, 1, -0.2, 0.3, -0.2, 1), nrow = 3)
+GenCorDataBiTri1.1(10^4, list(f2,f3,f4), cor_mat2)
  f1 = function(n){rnorm(n)}
  cor_mat = matrix(c(1,.49,.1, .49, 1, -.4, .1, -.4, 1), nrow = 3)
  GenCorDataBiTri1.1(10^5, list(f1,f1,f1), cor_mat,row.method = 1)
