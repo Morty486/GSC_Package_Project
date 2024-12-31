@@ -23,7 +23,6 @@ Generate a correlation matrix that correlations are feasible within bounds
 X <- function(n) rnorm(n, mean = 0, sd = 1)
 Y <- function(n) rpois(n, lambda = 2)
 Z <- function(n) runif(n, min = 0, max = 1)
-GenCorMat(list(X,Y,Z)))
-
+GenCorMat(list(X,Y,Z))
 
 }

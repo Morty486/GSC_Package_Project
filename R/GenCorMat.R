@@ -7,15 +7,18 @@
 #' @param max_tries the maximum iteration for generating correlation matrix
 #'
 #' @return a correlation matrix
-#' @export
+#'
+#' @importFrom stats cor
+#'
+#'
 #'
 #' @examples
 #' X <- function(n) rnorm(n, mean = 0, sd = 1)
 #' Y <- function(n) rpois(n, lambda = 2)
 #' Z <- function(n) runif(n, min = 0, max = 1)
-#' GenCorMat(list(X,Y,Z)))
+#' GenCorMat(list(X,Y,Z))
 #'
-#'
+#' @export
 GenCorMat <- function(lst, round = 2, max_tries = 100) {
   if (!(length(lst) == 2 || length(lst) == 3)) {
     stop("This function can only support 2 or 3 variables.")
