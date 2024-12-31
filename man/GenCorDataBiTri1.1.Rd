@@ -43,9 +43,9 @@ cor_mat1 = matrix(c(1, 0.2, 0.2, 1), nrow = 2)
 GenCorDataBiTri1.1(10^4, list(f1,f2), cor_mat1)
 
 cor_mat2 = matrix(c(1, -0.6, 0.3, -0.6, 1, -0.2, 0.3, -0.2, 1), nrow = 3)
-GenCorDataBiTri1.1(10^4, list(f2,f3,f4), cor_mat2)
+GenCorDataBiTri1.1(100, list(f2,f3,f4), cor_mat2)
 f1 = function(n){rnorm(n)}
-GenCorDataBiTri1.1(10^5, list(f1,f1,f1), cor_mat,row.method = 2)
+GenCorDataBiTri1.1(100, list(f1,f1,f1), cor_mat2,row.method = 2)
 
 
 

@@ -1,12 +1,15 @@
 Package: GSCSim
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Generate Sort Combine Simulation Study
 Version: 0.1.0
-Author: Who wrote it
+Author: Hengde Ouyang [aut, cre], Yexuan Jiang [aut, cre], 
+Lydia Lin [aut, cre], Owen Liu [aut, cre], Udita Chatterjee [aut, cre],
+Das Jagannah [aut, cre], Sean Shen [aut, cre], Demirtas Hakan [aut]
 Maintainer: Hengde Ouyang <houya@uic.edu>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Description: This package has updated the previous function
+in GenCorSeqSort and provided visulization for correlation results 
+in trivariate case. 
+License: GPL-2 | GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
