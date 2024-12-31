@@ -2,13 +2,28 @@
 % Please edit documentation in R/GenCorMat.R
 \name{GenCorMat}
 \alias{GenCorMat}
-\title{Title}
+\title{Correlation within Bounds}
 \usage{
 GenCorMat(lst, round = 2, max_tries = 100)
 }
 \arguments{
-\item{max_tries}{}
+\item{lst}{A list of functions which generate data under specified marginal distributions separately}
+
+\item{round}{the decimal we want to keep}
+
+\item{max_tries}{the maximum iteration for generating correlation matrix}
+}
+\value{
+a correlation matrix
 }
 \description{
-Title
+Generate a correlation matrix that correlations are feasible within bounds
+}
+\examples{
+X <- function(n) rnorm(n, mean = 0, sd = 1)
+Y <- function(n) rpois(n, lambda = 2)
+Z <- function(n) runif(n, min = 0, max = 1)
+GenCorMat(list(X,Y,Z)))
+
+
 }

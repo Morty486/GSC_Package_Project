@@ -2,8 +2,7 @@
 % Please edit documentation in R/GenBoundTable.R
 \name{GenBoundTable}
 \alias{GenBoundTable}
-\title{Generate a Table Lower (below the diagonal) and upper (above the diagonal)
-correlation bounds.}
+\title{Correlation Bounds Table}
 \usage{
 GenBoundTable(n, lst, digits = 4)
 }
@@ -12,7 +11,7 @@ GenBoundTable(n, lst, digits = 4)
 
 \item{lst}{A list of functions which generate data under specified marginal distributions separately}
 
-\item{digits}{the decimal for the correlation}
+\item{digits}{the decimal place for the correlation}
 }
 \value{
 A matrix with correlation bounds.
@@ -25,6 +24,6 @@ correlation bounds.
 X1 <- function(n) rnorm(n, mean = 0, sd = 1)
 X2 <- function(n) rpois(n, lambda = 2)
 X3 <- function(n) runif(n, min = 0, max = 1)
-GenBoundTable(10000,list(X1,X2,X3,digits=3))
+GenBoundTable(10000,list(X1,X2,X3),digits=3)
 
 }

@@ -1,10 +1,12 @@
 
+#' Correlation Bounds Table
+#'
 #' Generate a Table Lower (below the diagonal) and upper (above the diagonal)
 #' correlation bounds.
 #'
 #' @param n Sample size for the simulation data
 #' @param lst A list of functions which generate data under specified marginal distributions separately
-#' @param digits the decimal for the correlation
+#' @param digits the decimal place for the correlation
 #'
 #' @return A matrix with correlation bounds.
 #'
@@ -13,7 +15,7 @@
 #' X1 <- function(n) rnorm(n, mean = 0, sd = 1)
 #' X2 <- function(n) rpois(n, lambda = 2)
 #' X3 <- function(n) runif(n, min = 0, max = 1)
-#' GenBoundTable(10000,list(X1,X2,X3,digits=3))
+#' GenBoundTable(10000,list(X1,X2,X3),digits=3)
 #'
 #' @export
 GenBoundTable <- function(n, lst, digits = 4) {

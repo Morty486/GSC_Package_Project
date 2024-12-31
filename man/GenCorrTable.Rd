@@ -2,13 +2,35 @@
 % Please edit documentation in R/GenCorrTable.R
 \name{GenCorrTable}
 \alias{GenCorrTable}
-\title{Title}
+\title{Correlation Simulation Table}
 \usage{
 GenCorrTable(n, lst, cor_mat, row.method = 1, digits = 4)
 }
 \arguments{
-\item{digits}{}
+\item{n}{the sample size for the simulated data}
+
+\item{lst}{A list of functions which generate data under specified marginal distributions separately}
+
+\item{cor_mat}{Specified correlation matrix}
+
+\item{row.method}{Specified the method to calculate the
+exact number of sorting rows. Default value is 1,
+meaning that we used a probabilistic sorting to deal with bias
+(a simple algebraic operation). 2 means we
+generated much bigger data and
+choose a subset of desired size by sampling rows without replacement}
+
+\item{digits}{the decimal place for the correlation}
+}
+\value{
+A vector of specified and emprical correlations
 }
 \description{
-Title
+The empirical results for specified correlations
+}
+\examples{
+X <- function(n) rnorm(n, mean = 0, sd = 1)
+Y <- function(n) rpois(n, lambda = 2)
+Z <- function(n) runif(n, min = 0, max = 1)
+GenCorrTable(10000, list(X,Y,Z), GenCorMat(list(X,Y,Z)))
 }
