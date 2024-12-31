@@ -25,4 +25,9 @@ Y <- function(n) rpois(n, lambda = 2)
 Z <- function(n) runif(n, min = 0, max = 1)
 GenCorMat(list(X,Y,Z))
 
+A <- function(n) rbinom(n, size = 1, prob = 0.5)
+B <- function(n) rexp(n, rate = 1)
+C <- function(n) rbinom(n, size = 20, prob = 0.6)
+GenCorMat(list(A, B))
+
 }

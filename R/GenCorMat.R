@@ -18,64 +18,81 @@
 #' Z <- function(n) runif(n, min = 0, max = 1)
 #' GenCorMat(list(X,Y,Z))
 #'
+#' A <- function(n) rbinom(n, size = 1, prob = 0.5)
+#' B <- function(n) rexp(n, rate = 1)
+#' C <- function(n) rbinom(n, size = 20, prob = 0.6)
+#' GenCorMat(list(A, B))
+#'
 #' @export
 GenCorMat <- function(lst, round = 2, max_tries = 100) {
-  if (!(length(lst) == 2 || length(lst) == 3)) {
+  nvars <- length(lst)
+  if (!(nvars == 2 || nvars == 3)) {
     stop("This function can only support 2 or 3 variables.")
   }
 
-  bounds <- GenCorSeqSort::Compute.PairBounds(lst)  # Compute pairwise bounds for the variables
+  # 1) Compute feasible pairwise bounds
+  bounds <- GenCorSeqSort::Compute.PairBounds(lst)
 
+  # 2) Try up to max_tries times
   for (attempt in seq_len(max_tries)) {
-    cor_mat <- diag(1, length(lst))
+    # (A) Build an identity correlation matrix
+    cor_mat <- diag(1, nvars)
 
-    # Generate random correlations within bounds
-    for (i in seq_len(length(lst) - 1)) {
-      for (j in (i + 1):length(lst)) {
-        lower_ij <- bounds$low_bdd[i, j]
-        upper_ij <- bounds$up_bdd[i, j]
+    # (B) Fill random correlations in [lower, upper] for off-diagonals
+    for (i in seq_len(nvars - 1)) {
+      for (j in (i + 1):nvars) {
+        lo <- bounds$low_bdd[i, j]
+        hi <- bounds$up_bdd[i, j]
 
-        if (is.na(lower_ij) || is.na(upper_ij)) {
+        if (is.na(lo) || is.na(hi)) {
           stop("Feasible bounds contain NA; cannot pick a random correlation.")
         }
-        if (lower_ij > upper_ij) {
-          stop(paste("Inverted feasible range for pair (", i, ",", j, "):",
-                     "lower =", lower_ij, ">", "upper =", upper_ij))
+        if (lo > hi) {
+          stop(sprintf("Inverted feasible range for pair (%d, %d): lower=%.2f > upper=%.2f",
+                       i, j, lo, hi))
         }
 
-        # Generate correlation within bounds
-        corr_ij <- round(runif(1, min = lower_ij, max = upper_ij), round)
-        if (corr_ij < lower_ij) corr_ij <- lower_ij
-        if (corr_ij > upper_ij) corr_ij <- upper_ij
+        # Pick & round
+        corr_ij <- round(runif(1, lo, hi), round)
+        # Clamp if rounding drifts out of [lo, hi]
+        if (corr_ij < lo) corr_ij <- lo
+        if (corr_ij > hi) corr_ij <- hi
 
         cor_mat[i, j] <- corr_ij
         cor_mat[j, i] <- corr_ij
       }
     }
 
-    # Validate correlation matrix with Validate.Correlation
+    # (C) Single try(...) block with all checks
     try({
-      GenCorSeqSort::Validate.Correlation(cor_mat, bounds)  # Ensure matrix is valid
-    }, silent = TRUE)
+      # --- 1) Always validate correlation ---
+      GenCorSeqSort::Validate.Correlation(cor_mat, bounds)
 
-    # Perform Check.TriBounds validation
-    try({
-      l <- GenCorSeqSort::Find.Order(lst, cor_mat)  # Use Find.Order to get inputs for Check.TriBounds
-      cor <- l[[7]]
-      pv <- l[[6]]
-      low_bdd <- l[[3]]
-      up_bdd <- l[[4]]
-      ord <- l[[1]]
+      # If only 2 variables => if we succeed here, return
+      if (nvars == 2) {
+        return(cor_mat)
+      }
 
-      # Pass the matrix through Check.TriBounds
-      GenCorSeqSort::Check.TriBounds(cor, pv, low_bdd, up_bdd, ord, TRUE)
+      # --- 2) Otherwise, for 3 variables, also do tri-variate checks ---
+      l       <- GenCorSeqSort::Find.Order(lst, cor_mat)
+      cor_vec <- l[[7]]   # the re-ordered correlations
+      pv      <- l[[6]]   # partial-sorting proportions
+      low_bd  <- l[[3]]   # re-ordered lower bounds
+      up_bd   <- l[[4]]   # re-ordered upper bounds
+      ord     <- l[[1]]   # ordering of variables
 
-      # If both validations pass, return the matrix
+      GenCorSeqSort::Check.TriBounds(cor_vec, pv, low_bd, up_bd, ord, TRUE)
+
+      # If we get here => no error => pass => return
       return(cor_mat)
+
     }, silent = TRUE)
+
+    # If an error occurs in any step, we do not hit 'return(cor_mat)',
+    # so the loop just continues silently.
   }
 
-  # Stop if a valid matrix cannot be found after max_tries
-  stop(paste("Could not find a correlation matrix passing both validations",
+  # If all attempts fail, stop:
+  stop(paste("Could not find a correlation matrix passing the required checks",
              "within", max_tries, "tries."))
 }
