@@ -8,7 +8,7 @@
 #'
 #' @return a correlation matrix
 #'
-#' @importFrom stats cor
+#' @importFrom stats cor runif
 #'
 #'
 #'

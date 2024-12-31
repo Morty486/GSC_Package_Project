@@ -40,7 +40,7 @@ f2 = function(n){rexp(n)}
 f3 = function(n){rpois(n, 2.5)}
 f4 = function(n){rbinom(n, 10, 0.5)}
 cor_mat1 = matrix(c(1, 0.2, 0.2, 1), nrow = 2)
-GenCorDataBiTri1.1(10^4, list(f1,f2), cor_mat1)
+GenCorDataBiTri1.1(100, list(f1,f2), cor_mat1)
 
 cor_mat2 = matrix(c(1, -0.6, 0.3, -0.6, 1, -0.2, 0.3, -0.2, 1), nrow = 3)
 GenCorDataBiTri1.1(100, list(f2,f3,f4), cor_mat2)

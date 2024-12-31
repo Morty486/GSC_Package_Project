@@ -33,7 +33,7 @@ sort (k-1) sequences of numbers sequentially. In this function, the sequential s
 For example, if we have 4 random variables X, Y, Z, and Q, and the input order is (X, Y, Z, Q), first we keep the sequence for X unchanged and sort Y, Z and Q accordingly.
 Then we keep Y unchanged and sort Z, Q accordingly. Finally, we keep Z unchanged and sort Q accordingly. The input order will affect the range of feasible correlation structures
 which can be achieved by this method. For higher dimensions (> 3), it is hard to calculate the conditional bounds for this method.
-If k <= 3, we recommend to use \code{\link{GenCorData}} function.
+If k <= 3, we recommend to use \code{\link{GenCorDataBiTri1.1}} function.
 }
 \examples{
 f1 = function(n){rnorm(n)}

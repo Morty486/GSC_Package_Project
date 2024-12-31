@@ -11,7 +11,7 @@
 #' For example, if we have 4 random variables X, Y, Z, and Q, and the input order is (X, Y, Z, Q), first we keep the sequence for X unchanged and sort Y, Z and Q accordingly.
 #' Then we keep Y unchanged and sort Z, Q accordingly. Finally, we keep Z unchanged and sort Q accordingly. The input order will affect the range of feasible correlation structures
 #' which can be achieved by this method. For higher dimensions (> 3), it is hard to calculate the conditional bounds for this method.
-#' If k <= 3, we recommend to use \code{\link{GenCorData}} function.
+#' If k <= 3, we recommend to use \code{\link{GenCorDataBiTri1.1}} function.
 #'
 #'
 #' @param n  Sample size for the simulation data
@@ -89,7 +89,7 @@ GenCorDataMulti1.1 = function(n, lst, cor_mat, row.method = 1) {
         stop(err)
       }
 
-      sim[, j] = Rank.Sort(sim[, i], sim[, j], n_start:(n_start + n_end), cor_mat[i, j])
+      sim[, j] = GenCorSeqSort::Rank.Sort(sim[, i], sim[, j], n_start:(n_start + n_end), cor_mat[i, j])
     }
 
     n_start = n_start + max(floor(oversample_n * prop_matrix[i, (i + 1):n.var]))

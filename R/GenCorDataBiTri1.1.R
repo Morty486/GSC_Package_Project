@@ -36,7 +36,7 @@
 #' f3 = function(n){rpois(n, 2.5)}
 #' f4 = function(n){rbinom(n, 10, 0.5)}
 #' cor_mat1 = matrix(c(1, 0.2, 0.2, 1), nrow = 2)
-#' GenCorDataBiTri1.1(10^4, list(f1,f2), cor_mat1)
+#' GenCorDataBiTri1.1(100, list(f1,f2), cor_mat1)
 #'
 #' cor_mat2 = matrix(c(1, -0.6, 0.3, -0.6, 1, -0.2, 0.3, -0.2, 1), nrow = 3)
 #' GenCorDataBiTri1.1(100, list(f2,f3,f4), cor_mat2)
@@ -120,7 +120,7 @@ GenCorDataBiTri1.1 = function(n, lst, cor_mat,row.method=1) {
 
   if (length(lst) == 3) {
 
-    l = Find.Order(lst, cor_mat)
+    l = GenCorSeqSort::Find.Order(lst, cor_mat)
     ord = l[[1]]
     srt_lst = l[[2]]
     srt_low_bdd = l[[3]]
@@ -129,7 +129,7 @@ GenCorDataBiTri1.1 = function(n, lst, cor_mat,row.method=1) {
     srt_pv = l[[6]]
     srt_cor = l[[7]]
 
-    Check.TriBounds(srt_cor, srt_pv, srt_low_bdd, srt_up_bdd, ord)
+    GenCorSeqSort::Check.TriBounds(srt_cor, srt_pv, srt_low_bdd, srt_up_bdd, ord)
 
     sim = sapply(srt_lst, function(a){a(n)})
     if (row.method == 2){
@@ -159,9 +159,9 @@ GenCorDataBiTri1.1 = function(n, lst, cor_mat,row.method=1) {
       if (row.method == 2){
         n3 = floor(srt_pv[3]*n*10)
       }
-      sim[, 2] = Rank.Sort(sim[, 1], sim[, 2], 1:n1, srt_cor[1])
-      sim[, 3] = Rank.Sort(sim[, 1], sim[, 3], (n1 + 1):(n1 + n2), srt_cor[2])
-      sim[, 3] = Rank.Sort(sim[, 2], sim[, 3], (n1 + n2 + 1):(n1 + n2+ n3), srt_cor[3])
+      sim[, 2] = GenCorSeqSort::Rank.Sort(sim[, 1], sim[, 2], 1:n1, srt_cor[1])
+      sim[, 3] = GenCorSeqSort::Rank.Sort(sim[, 1], sim[, 3], (n1 + 1):(n1 + n2), srt_cor[2])
+      sim[, 3] = GenCorSeqSort::Rank.Sort(sim[, 2], sim[, 3], (n1 + n2 + 1):(n1 + n2+ n3), srt_cor[3])
     }else{
       print("Sort with overlap")
       # The remain correlation need to achieve for the last one
@@ -170,9 +170,9 @@ GenCorDataBiTri1.1 = function(n, lst, cor_mat,row.method=1) {
       if (row.method == 2){
         n3 = ifelse(rem >= 0, floor(10*n*(rem/srt_up_bdd[3])), floor(10*n*(rem/srt_low_bdd[3])))
       }
-      sim[, 2] = Rank.Sort(sim[, 1], sim[, 2], (1:n1), srt_cor[1])
-      sim[, 3] = Rank.Sort(sim[, 1], sim[, 3], 1:n2, srt_cor[2])
-      sim[, 3] = Rank.Sort(sim[, 2], sim[, 3], (n2 + 1):(n2 + n3), rem)
+      sim[, 2] = GenCorSeqSort::Rank.Sort(sim[, 1], sim[, 2], (1:n1), srt_cor[1])
+      sim[, 3] = GenCorSeqSort::Rank.Sort(sim[, 1], sim[, 3], 1:n2, srt_cor[2])
+      sim[, 3] = GenCorSeqSort::Rank.Sort(sim[, 2], sim[, 3], (n2 + 1):(n2 + n3), rem)
     }
 
   }
