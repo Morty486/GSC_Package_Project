@@ -8,9 +8,6 @@ Description: This package has updated the previous function in GenCorSeqSort and
 License: GPL-2 | GPL-3
 Encoding: UTF-8
 LazyData: false
-Imports:
-    GenCorSeqSort,
-    matrixcalc
 RoxygenNote: 7.3.2
 Suggests: 
     knitr,
