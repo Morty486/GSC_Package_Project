@@ -2,7 +2,7 @@ Package: GSCSim
 Type: Package
 Title: Generate Sort Combine Simulation Study
 Version: 0.1.0
-Author: Hengde Ouyang [aut, cre], Yexuan Jiang [aut, cre], Lydia Lin [aut, cre], Owen Liu [aut, cre], Udita Chatterjee [aut, cre], Jagannah Das [aut, cre], Sean Shen [aut, cre], Demirtas Hakan [aut]
+Author: Hengde Ouyang [aut, cre], Yexuan Jiang [aut, cre], Lydia Lin [aut, cre], Owen Liu [aut, cre], Udita Chatterjee [aut, cre], Jagannath Das [aut, cre], Sean Shen [aut, cre], Demirtas Hakan [aut]
 Maintainer: Hengde Ouyang <houya@uic.edu>
 Description: This package has updated the previous function in GenCorSeqSort and provided visulization for correlation resultsin trivariate case. 
 License: GPL-2 | GPL-3
