@@ -24,21 +24,21 @@
 #' GenCorMat(list(A, B))
 #'
 #' @export
+
+
 GenCorMat <- function(lst, round = 2, max_tries = 100) {
   nvars <- length(lst)
   if (!(nvars == 2 || nvars == 3)) {
     stop("This function can only support 2 or 3 variables.")
   }
 
-  # 1) Compute feasible pairwise bounds
+  # Compute pairwise bounds for the variables
   bounds <- GenCorSeqSort::Compute.PairBounds(lst)
 
-  # 2) Try up to max_tries times
   for (attempt in seq_len(max_tries)) {
-    # (A) Build an identity correlation matrix
     cor_mat <- diag(1, nvars)
 
-    # (B) Fill random correlations in [lower, upper] for off-diagonals
+    # Generate random correlations within bounds
     for (i in seq_len(nvars - 1)) {
       for (j in (i + 1):nvars) {
         lo <- bounds$low_bdd[i, j]
@@ -52,9 +52,8 @@ GenCorMat <- function(lst, round = 2, max_tries = 100) {
                        i, j, lo, hi))
         }
 
-        # Pick & round
         corr_ij <- round(runif(1, lo, hi), round)
-        # Clamp if rounding drifts out of [lo, hi]
+
         if (corr_ij < lo) corr_ij <- lo
         if (corr_ij > hi) corr_ij <- hi
 
@@ -63,36 +62,31 @@ GenCorMat <- function(lst, round = 2, max_tries = 100) {
       }
     }
 
-    # (C) Single try(...) block with all checks
+
     try({
-      # --- 1) Always validate correlation ---
+      # Validate correlation matrix with Validate.Correlation
       GenCorSeqSort::Validate.Correlation(cor_mat, bounds)
 
-      # If only 2 variables => if we succeed here, return
+      # If only 2 variables, return if succeed
       if (nvars == 2) {
         return(cor_mat)
       }
 
-      # --- 2) Otherwise, for 3 variables, also do tri-variate checks ---
+      #for 3 variables, also perform Check.TriBounds validation
       l       <- GenCorSeqSort::Find.Order(lst, cor_mat)
-      cor_vec <- l[[7]]   # the re-ordered correlations
-      pv      <- l[[6]]   # partial-sorting proportions
-      low_bd  <- l[[3]]   # re-ordered lower bounds
-      up_bd   <- l[[4]]   # re-ordered upper bounds
-      ord     <- l[[1]]   # ordering of variables
+      cor_vec <- l[[7]]
+      pv      <- l[[6]]
+      low_bd  <- l[[3]]
+      up_bd   <- l[[4]]
+      ord     <- l[[1]]
 
       GenCorSeqSort::Check.TriBounds(cor_vec, pv, low_bd, up_bd, ord, TRUE)
 
-      # If we get here => no error => pass => return
       return(cor_mat)
-
     }, silent = TRUE)
-
-    # If an error occurs in any step, we do not hit 'return(cor_mat)',
-    # so the loop just continues silently.
   }
 
-  # If all attempts fail, stop:
+  # Stop if a valid matrix cannot be found after max_tries
   stop(paste("Could not find a correlation matrix passing the required checks",
              "within", max_tries, "tries."))
 }

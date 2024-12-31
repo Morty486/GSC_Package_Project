@@ -4,7 +4,7 @@
 \alias{TableGeneration}
 \title{Generate Correaltion Bound Table and Simulation Table}
 \usage{
-TableGeneration(n, lst, dist_X, dist_Y, dist_Z)
+TableGeneration(n, lst, dist_X, dist_Y, dist_Z = NULL)
 }
 \arguments{
 \item{n}{number of combinations of specified correlations want to generate}
@@ -34,5 +34,8 @@ Z <- function(n) runif(n, min = 0, max = 1)
 a <- TableGeneration(5, list(X, Y, Z), "N(0, 1)", "Poisson(2)", "Uniform(0, 1)")
 a$bounds_table
 a$correlation_table
+b <- TableGeneration(5, list(Y, Z), "Poisson(2)", "Uniform(0, 1)")
+b$bounds_table
+b$correlation_table
 
 }

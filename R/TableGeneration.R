@@ -26,8 +26,15 @@
 #' a <- TableGeneration(5, list(X, Y, Z), "N(0, 1)", "Poisson(2)", "Uniform(0, 1)")
 #' a$bounds_table
 #' a$correlation_table
+#' b <- TableGeneration(5, list(Y, Z), "Poisson(2)", "Uniform(0, 1)")
+#' b$bounds_table
+#' b$correlation_table
 #'
-TableGeneration <- function(n, lst, dist_X, dist_Y, dist_Z) {
+TableGeneration <- function(n, lst, dist_X, dist_Y, dist_Z = NULL) {
+  if (!(length(lst) == 2 || length(lst) == 3)) {
+    stop("This function only supports 2 or 3 variables.")
+  }
+
   # Initialize an empty list to store the results of each replication
   results_list <- list()
 
@@ -54,32 +61,56 @@ TableGeneration <- function(n, lst, dist_X, dist_Y, dist_Z) {
 
   # Convert the bounds matrix to a readable data frame format
   bounds_table <- as.data.frame(bounds)
-  colnames(bounds_table) <- c("X", "Y", "Z")
-  bounds_table <- cbind(Variable = c("X", "Y", "Z"), bounds_table)
+  if (length(lst) == 2) {
+    colnames(bounds_table) <- c("X", "Y")
+    bounds_table <- cbind(Variable = c("X","Y"), bounds_table)
+  } else {
+    colnames(bounds_table) <- c("X", "Y", "Z")
+    bounds_table <- cbind(Variable = c("X","Y","Z"), bounds_table)
+  }
   rownames(bounds_table) <- NULL
 
   # Add columns specifying the distributions
-  dist_data <- data.frame(
-    X = rep(dist_X, nrow(combined_results)),
-    Y = rep(dist_Y, nrow(combined_results)),
-    Z = rep(dist_Z, nrow(combined_results))
-  )
+  if (length(lst) == 2) {
+    dist_data <- data.frame(
+      X = rep(dist_X, nrow(combined_results)),
+      Y = rep(dist_Y, nrow(combined_results))
+    )
+  } else {
+    dist_data <- data.frame(
+      X = rep(dist_X, nrow(combined_results)),
+      Y = rep(dist_Y, nrow(combined_results)),
+      Z = rep(dist_Z, nrow(combined_results))
+    )
+  }
 
   # Combine the distribution columns with the results
   final_table <- cbind(dist_data, combined_results)
 
   # Replace repeated values with blanks after the first row
-  final_table$X[-1] <- ""
-  final_table$Y[-1] <- ""
-  final_table$Z[-1] <- ""
+  if (length(lst) == 2) {
+    final_table$X[-1] <- ""
+    final_table$Y[-1] <- ""
+  } else {
+    final_table$X[-1] <- ""
+    final_table$Y[-1] <- ""
+    final_table$Z[-1] <- ""
+  }
 
   # Rename columns for better readability
-  colnames(final_table) <- c(
-    "X", "Y", "Z",
-    "delta_spec_XY", "delta_emp_XY",
-    "delta_spec_XZ", "delta_emp_XZ",
-    "delta_spec_YZ", "delta_emp_YZ"
-  )
+  if (length(lst) == 2) {
+    colnames(final_table) <- c(
+      "X", "Y",
+      "delta_spec_XY", "delta_emp_XY"
+    )
+  } else {
+    colnames(final_table) <- c(
+      "X", "Y", "Z",
+      "delta_spec_XY", "delta_emp_XY",
+      "delta_spec_XZ", "delta_emp_XZ",
+      "delta_spec_YZ", "delta_emp_YZ"
+    )
+  }
 
   # Create a list to store both tables
   result_tables <- list(
@@ -90,6 +121,5 @@ TableGeneration <- function(n, lst, dist_X, dist_Y, dist_Z) {
   # Return the tables
   return(result_tables)
 }
-
 
 
