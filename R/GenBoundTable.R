@@ -19,7 +19,7 @@
 #'
 #' @export
 GenBoundTable <- function(n, lst, digits = 4) {
-  pair_bounds <- Compute.PairBounds(lst)
+  pair_bounds <- GenCorSeqSort::Compute.PairBounds(lst)
   nvars <- length(lst)
   bounds_table <- matrix(1, nrow = nvars, ncol = nvars)
 

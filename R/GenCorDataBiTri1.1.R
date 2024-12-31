@@ -56,9 +56,9 @@ GenCorDataBiTri1.1 = function(n, lst, cor_mat,row.method=1) {
     stop("Dimension of correlation matrix does not match the number of variables! \n")
   }
 
-  pairbounds = Compute.PairBounds(lst)
-  Validate.Correlation(cor_mat, pairbounds)
-  prop_vec = Compute.SortProp(cor_mat, pairbounds)
+  pairbounds = GenCorSeqSort::Compute.PairBounds(lst)
+  GenCorSeqSort::Validate.Correlation(cor_mat, pairbounds)
+  prop_vec = GenCorSeqSort::Compute.SortProp(cor_mat, pairbounds)
 
 
   # Function to compute probabilities for floor and ceiling

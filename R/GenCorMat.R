@@ -24,7 +24,7 @@ GenCorMat <- function(lst, round = 2, max_tries = 100) {
     stop("This function can only support 2 or 3 variables.")
   }
 
-  bounds <- Compute.PairBounds(lst)  # Compute pairwise bounds for the variables
+  bounds <- GenCorSeqSort::Compute.PairBounds(lst)  # Compute pairwise bounds for the variables
 
   for (attempt in seq_len(max_tries)) {
     cor_mat <- diag(1, length(lst))
@@ -55,12 +55,12 @@ GenCorMat <- function(lst, round = 2, max_tries = 100) {
 
     # Validate correlation matrix with Validate.Correlation
     try({
-      Validate.Correlation(cor_mat, bounds)  # Ensure matrix is valid
+      GenCorSeqSort::Validate.Correlation(cor_mat, bounds)  # Ensure matrix is valid
     }, silent = TRUE)
 
     # Perform Check.TriBounds validation
     try({
-      l <- Find.Order(lst, cor_mat)  # Use Find.Order to get inputs for Check.TriBounds
+      l <- GenCorSeqSort::Find.Order(lst, cor_mat)  # Use Find.Order to get inputs for Check.TriBounds
       cor <- l[[7]]
       pv <- l[[6]]
       low_bdd <- l[[3]]
@@ -68,7 +68,7 @@ GenCorMat <- function(lst, round = 2, max_tries = 100) {
       ord <- l[[1]]
 
       # Pass the matrix through Check.TriBounds
-      Check.TriBounds(cor, pv, low_bdd, up_bdd, ord, TRUE)
+      GenCorSeqSort::Check.TriBounds(cor, pv, low_bdd, up_bdd, ord, TRUE)
 
       # If both validations pass, return the matrix
       return(cor_mat)
