@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
   [![R-CMD-check](https://github.com/Morty486/GSC_Package_Project/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Morty486/GSC_Package_Project/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/Morty486/GSC_Package_Project/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Morty486/GSC_Package_Project/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Introduction
